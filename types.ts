@@ -1,3 +1,4 @@
+
 export enum Theme {
   Light = 'light',
   Dark = 'dark',
@@ -235,6 +236,24 @@ export interface Database {
           user_id?: string
         }
       }
+    }
+    // FIX: Add Views, Functions, Enums, and CompositeTypes to complete the Database type definition for Supabase, resolving widespread 'never' type errors.
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      increment_views: {
+        Args: {
+          guide_id: string
+        }
+        Returns: undefined
+      }
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
     }
   }
 }
