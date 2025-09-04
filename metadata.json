@@ -1,0 +1,5 @@
+{
+  "name": "JaboWay",
+  "description": "A progressive web app that teaches newcomers how to use public facilities and transport in Jabodetabek, with guides, themes, and offline support.",
+  "requestFramePermissions": []
+}

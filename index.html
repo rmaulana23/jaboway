@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JaboWay</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#ffffff">
+    <style>
+      :root, [data-theme='dark'] {
+        --color-bg: #0F1724;
+        --color-surface: #111827;
+        --color-primary: #60A5FA;
+        --color-text-primary: #F8FAFC;
+        --color-text-muted: #A3AFC0;
+        --color-border: #374151;
+      }
+      [data-theme='light'] {
+        --color-bg: #FFFFFF;
+        --color-surface: #F1F5FF;
+        --color-primary: #2563EB;
+        --color-text-primary: #0F172A;
+        --color-text-muted: #475569;
+        --color-border: #E2E8F0;
+      }
+      body {
+        background-color: var(--color-bg);
+        color: var(--color-text-primary);
+        transition: background-color 0.3s ease, color 0.3s ease;
+        background-image: radial-gradient(var(--color-border) 1px, transparent 1px);
+        background-size: 16px 16px;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.1.1",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.1.1/",
+    "react/": "https://aistudiocdn.com/react@^19.1.1/",
+    "@supabase/supabase-js": "https://aistudiocdn.com/@supabase/supabase-js@^2.57.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('./service-worker.js').then(registration => {
+            console.log('SW registered: ', registration);
+          }).catch(registrationError => {
+            console.log('SW registration failed: ', registrationError);
+          });
+        });
+      }
+    </script>
+  </body>
+</html>
