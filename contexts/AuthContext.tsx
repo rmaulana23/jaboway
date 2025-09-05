@@ -57,6 +57,43 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
     );
 
+    // PATCHED: Tambahan fallback bikin profil user otomatis jika belum ada
+if (session?.user) {
+  const user = session.user;
+  let { data: profile } = await supabase
+    .from('profiles')
+    .select('*')
+    .eq('id', user.id)
+    .single();
+
+  if (!profile) {
+    const fallbackUsername =
+      (user.user_metadata && user.user_metadata.username) ||
+      (user.email ? user.email.split('@')[0] : `user_${user.id.slice(0, 6)}`);
+
+    const { data: newProfile, error: insertErr } = await supabase
+      .from('profiles')
+      .insert({
+        id: user.id,
+        email: user.email,
+        username: fallbackUsername,
+        role: 'user',
+        status: 'active',
+        warnings: null
+      })
+      .select('*')
+      .single();
+
+    if (!insertErr) {
+      profile = newProfile;
+    }
+  }
+
+  setCurrentUser(profile ?? null);
+} else {
+  setCurrentUser(null);
+}
+
     return () => subscription.unsubscribe();
   }, []);
 
