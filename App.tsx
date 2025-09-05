@@ -25,12 +25,14 @@ import WarningModal from './components/WarningModal';
 import ReportPostModal from './components/ReportPostModal';
 import { t } from './utils/i18n';
 import Footer from './components/Footer';
+import { useAuth } from './contexts/AuthContext'
 
 function AppContent() {
-  const { currentUser, acknowledgeWarning } = useAuth();
+  const { acknowledgeWarning } = useAuth();
   const [activeTab, setActiveTab] = useState('home');
   const [selectedGuide, setSelectedGuide] = useState<Guide | null>(null);
   const [showLogin, setShowLogin] = useState(false);
+  const { currentUser } = useAuth();
   const [showRegister, setShowRegister] = useState(false);
   const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [openNetizenForm, setOpenNetizenForm] = useState(false);
@@ -49,6 +51,14 @@ function AppContent() {
       return () => clearTimeout(timer);
     }
   }, [notification]);
+
+  // PATCHED: redirect ke profile setelah login sukses
+useEffect(() => {
+  if (currentUser && showLogin) {
+    setShowLogin(false);
+    setActiveTab('profile');
+  }
+}, [currentUser, showLogin]);
 
   useEffect(() => {
     // FIX: Cast warnings to UserWarning[] before using Array.prototype.find.
